@@ -31,6 +31,17 @@ int hash_function(int key)
     return key % 100;
 }
 
+// It creates 100 slots from 0 to 99
+void create_slots(Slot* headpointer)
+{
+    for (int i = 0; i < 100; i++)
+    {
+        Node* table = new list<Node>;
+        Slot* tempslot = new Slot(i, table);
+        *(headpointer + i) = tempslot;
+    }
+}
+
 int main()
 {
     // Create an array of pointer as slots
