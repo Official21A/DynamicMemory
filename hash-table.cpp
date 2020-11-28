@@ -39,6 +39,21 @@ void create_slots(Slot slots[])
     }
 }
 
+// This function creates a new single node
+Node create_node(int key, int data)
+{
+    Node temp(key, data);
+    return temp;
+}
+
+// Methods
+// Inserting
+void insert(Slot slots[], int key, int data)
+{
+    int hashedkey = hash_function(key);
+    slots[hashedkey].hash_list.push_front(create_node(key, data));
+}
+
 int main()
 {
     // Create an array of pointer as slots
@@ -48,5 +63,6 @@ int main()
     // Create the diagram of data structure
     Slot slots[100];
     create_slots(slots);
+    insert(slots, 10, 500);
     return 0;
 }
