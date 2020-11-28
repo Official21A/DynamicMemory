@@ -4,26 +4,25 @@
 using namespace std;
 
 // Each data element that we store in memory
-class Node {
-    int key;
-    int data;
-    Node(int newkey, int nodedata)
-    {
-        key = newkey;
-        data = nodedata;
-    }
-}
+class Node 
+{
+    public:
+        int key;
+        int data;
+        Node(int newkey, int nodedata)
+        {
+            key = newkey;
+            data = nodedata;
+        };
+};
 
 // The slots are the gates the lead us to the right list
-class Slot {
-    int key;
-    Node* table;
-    Slot(int keypart, Node* tablepointer)
-    {
-        key = keypart;
-        table = tablepointer;
-    }
-}
+class Slot 
+{
+    public:
+        int key;
+        list <Node> hash_list;
+};
 
 // Hashes the key given to a new key
 int hash_function(int key)
@@ -32,13 +31,11 @@ int hash_function(int key)
 }
 
 // It creates 100 slots from 0 to 99
-void create_slots(Slot* headpointer)
+void create_slots(Slot slots[])
 {
     for (int i = 0; i < 100; i++)
     {
-        Node* table = new list<Node>;
-        Slot* tempslot = new Slot(i, table);
-        *(headpointer + i) = tempslot;
+        slots[i].key = i;
     }
 }
 
@@ -49,4 +46,7 @@ int main()
     // Create a linked list for any slots to point at
     // Add the methods
     // Create the diagram of data structure
+    Slot slots[100];
+    create_slots(slots);
+    return 0;
 }
