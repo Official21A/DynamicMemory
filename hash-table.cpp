@@ -54,6 +54,26 @@ void insert(Slot slots[], int key, int data)
     slots[hashedkey].hash_list.push_front(create_node(key, data));
 }
 
+// Deleting
+void remove(Slot slots[], int key)
+{
+    int hashedkey = hash_function(key);
+    int size = slots[hashedkey].hash_list.size();
+    int index = -1;
+    for (int i = 0; i < size; i++)
+    {
+        if (slots[hashedkey].hash_list[i].key == key)
+        {
+            index = i;
+            break;
+        }
+    }
+    if (index != -1)
+    {
+        slots[hashedkey].hash_list.erase(index);
+    }
+}
+
 int main()
 {
     // Create an array of pointer as slots
