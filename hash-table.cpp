@@ -122,5 +122,17 @@ int main()
 {
     Slot slots[100];
     create_slots(slots);
+    //
+    insertNode(slots, 3, 500);
+    //
+    insertNode(slots, 12, 5432);
+    //
+    insertNode(slots, 84, 43213);
+    //
+    insertNode(slots, 443, 54321);
+    //
+    remove(slots, 84);
+    //
+    remove(slots, 443);
     return 0;
 }
