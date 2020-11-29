@@ -9,10 +9,12 @@ class Node
     public:
         int key;
         int data;
+        Node* next;
         Node(int newkey, int nodedata)
         {
             key = newkey;
             data = nodedata;
+            next = NULL;
         };
 };
 
@@ -21,7 +23,16 @@ class Slot
 {
     public:
         int key;
-        list <Node> hash_list;
+        Node* listhead;
+        Slot()
+        {
+            listhead = NULL;
+        }
+        void insert(Node* newnode)
+        {
+            newnode->next = listhead;
+            listhead = newnode;
+        }
 };
 
 // Hashes the key given to a new key
@@ -40,9 +51,9 @@ void create_slots(Slot slots[])
 }
 
 // This function creates a new single node
-Node create_node(int key, int data)
+Node* create_node(int key, int data)
 {
-    Node temp(key, data);
+    Node* temp = new Node(key, data);
     return temp;
 }
 
@@ -51,27 +62,66 @@ Node create_node(int key, int data)
 void insert(Slot slots[], int key, int data)
 {
     int hashedkey = hash_function(key);
-    slots[hashedkey].hash_list.push_front(create_node(key, data));
+    slots[hashedkey].insert(create_node(key, data));
+}
+
+void deleteNode(Node* head, Node* n)  
+{  
+    // When node to be deleted is head node  
+    if(head == n)  
+    {  
+        if(head->next == NULL)  
+        {  
+            return;  
+        }  
+  
+        /* Copy the data of next node to head */
+        head->key = head->next->key;  
+  
+        // store address of next node  
+        n = head->next;  
+  
+        // Remove the link of next node  
+        head->next = head->next->next;  
+  
+        // free memory  
+        delete n;  
+  
+        return;  
+    }  
+  
+    Node* prev = head;  
+    while(prev->next != NULL && prev->next != n)  
+        prev = prev->next;  
+  
+    // Check if node really exists in Linked List  
+    if(prev->next == NULL)  
+    {  
+        return;  
+    }  
+  
+    // Remove node from Linked List  
+    prev->next = prev->next->next;  
+  
+    // Free memory  
+    delete n;
+  
+    return;  
 }
 
 // Deleting
 void remove(Slot slots[], int key)
 {
     int hashedkey = hash_function(key);
-    int size = slots[hashedkey].hash_list.size();
-    int index = -1;
-    for (int i = 0; i < size; i++)
+    Node* head = slots[hashedkey].listhead;
+    while(head != NULL)
     {
-        if (slots[hashedkey].hash_list[i].key == key)
-        {
-            index = i;
+        if (head->key == key)
             break;
-        }
+        else
+            head = head->next;
     }
-    if (index != -1)
-    {
-        slots[hashedkey].hash_list.erase(index);
-    }
+    deleteNode(slots[hashedkey].listhead, head);
 }
 
 int main()
