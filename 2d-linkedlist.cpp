@@ -27,6 +27,7 @@ class Head
     public:
         int size;
         Node* head;
+        Head* next;
         Head()
         {
             size = 0;
@@ -34,21 +35,23 @@ class Head
         };
         void add_to_head(Node* temp)
         {
+            size++;
             temp->next = head;
             head = temp;
         };
-        void remove(Node* temp)
+        void remove(int vale)
         {
             Node* prev = NULL; 
             
-            if (head != NULL && head == temp) 
+            if (head != NULL && head->data == vale) 
             { 
                 head = temp->next; 
                 delete temp;
+                size--;
                 return; 
             } 
 
-            while (head != NULL && head != temp) 
+            while (head != NULL && head->data != vale) 
             { 
                 prev = head; 
                 head = head->next; 
@@ -59,16 +62,36 @@ class Head
          
             prev->next = head->next; 
             delete temp; 
+            size--;
         };
 };
 
-void insert(int value)
-{
-    Node* temp = create_node(value);
+Head* main_head = NULL;
 
+void insert(int index, int value)
+{
+    Head* current = main_head;
+    for (int i = 0; i < index; i++)
+    {
+        if (current->next == NULL)
+        {
+            return;
+        }
+        current = current->next;
+    }
+    Node* temp = create_node(value);
+    current->add_to_head(temp);
 }
 
-
+void deletion(int value)
+{
+    Head* current = main_head;
+    while (current != NULL)
+    {
+        current->remove(value);
+        current = current->next;
+    }
+}
 
 int main()
 {
