@@ -71,7 +71,7 @@ Head* main_head = NULL;
 void insert(int index, int value)
 {
     Head* current = main_head;
-    for (int i = 0; i < index; i++)
+    for (int i = 1; i <= index; i++)
     {
         if (current->next == NULL)
         {
@@ -93,7 +93,28 @@ void deletion(int value)
     }
 }
 
+void initalize(int number)
+{
+    for (int i = 0; i < number; i++)
+    {
+        Head* template = new Head();
+        template->next = main_head;
+        main_head = template;
+    }
+}
+
+// Testbench
 int main()
 {
+    initalize(5); // Starting with 5 ports for y
+    // Some insertions
+    insert(1, 100);
+    insert(4, 50);
+    insert(4, 63);
+    insert(2, 27);
+    insert(3, 27);
+    // Some deletion
+    deletion(50);
+    deletion(27);
     return 0;
 }
