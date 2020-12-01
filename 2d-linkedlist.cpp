@@ -17,11 +17,15 @@ class Node
         };
 };
 
+// A method for creating the memory elements
 Node* create_node(int value)
 {
     return new Node(value);
 }
 
+// Each linkedlist has a head that holdes the information about
+// that list among of the pointers to the starting memory element
+// and the next head.
 class Head
 {
     public:
@@ -78,8 +82,10 @@ class Head
         };
 };
 
+// Head of the headers
 Head* main_head = NULL;
 
+// This method inserts a new node at a gate ( in case of exists )
 void insert(int index, int value)
 {
     Head* current = main_head;
@@ -95,6 +101,7 @@ void insert(int index, int value)
     current->add_to_head(temp);
 }
 
+// This method will remove all the nodes with given value in lists
 void deletion(int value)
 {
     Head* current = main_head;
@@ -105,6 +112,7 @@ void deletion(int value)
     }
 }
 
+// This method will create some gates at the start
 void initalize(int number)
 {
     for (int i = 0; i < number; i++)
@@ -115,6 +123,7 @@ void initalize(int number)
     }
 }
 
+// For adding a new slot or gate to the first dimention of linkedlists
 int new_gate()
 {
     Head* temp = new Head();
@@ -130,6 +139,7 @@ int new_gate()
     return index;
 }
 
+// This method will remove a gate and all of the nodes init
 void delete_gate(int number)
 {
     Head* prev = NULL; 
@@ -159,6 +169,7 @@ void delete_gate(int number)
     delete current; 
 }
 
+
 // Testbench
 int main()
 {
@@ -172,5 +183,10 @@ int main()
     // Some deletion
     deletion(50);
     deletion(27);
+    // Adding gates
+    new_gate();
+    new_gate();
+    // Removing gate
+    delete_gate(4);
     return 0;
 }
