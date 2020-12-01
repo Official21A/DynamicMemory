@@ -45,8 +45,9 @@ class Head
             
             if (head != NULL && head->data == vale) 
             { 
-                head = temp->next; 
-                delete temp;
+                prev = head;
+                head = head->next; 
+                delete prev;
                 size--;
                 return; 
             } 
@@ -61,8 +62,19 @@ class Head
                 return; 
          
             prev->next = head->next; 
-            delete temp; 
+            delete head; 
             size--;
+        };
+        void clear_all()
+        {
+            Node* current = head;
+            Node* after = NULL;
+            while(head != NULL)
+            {
+                after = head->next;
+                delete head;
+                head = after;
+            }
         };
 };
 
@@ -97,10 +109,54 @@ void initalize(int number)
 {
     for (int i = 0; i < number; i++)
     {
-        Head* template = new Head();
-        template->next = main_head;
-        main_head = template;
+        Head* temp = new Head();
+        temp->next = main_head;
+        main_head = temp;
     }
+}
+
+int new_gate()
+{
+    Head* temp = new Head();
+    Head* current = main_head;
+    int index = 0;
+    while(current->next != NULL)
+    {
+        current = current->next;
+        index++;
+    }
+    current->next = temp;
+    temp->next = NULL;
+    return index;
+}
+
+void delete_gate(int number)
+{
+    Head* prev = NULL; 
+    Head* current = main_head;
+    int index = 0;
+            
+    if (current != NULL && number == 0) 
+    { 
+        main_head = current->next; 
+        current->clear_all();
+        delete current;
+        return; 
+    } 
+
+    while (current != NULL && index != number) 
+    { 
+        prev = current; 
+        current = current->next; 
+        index++;
+    } 
+
+    if (current == NULL) 
+        return; 
+    
+    prev->next = current->next; 
+    current->clear_all();
+    delete current; 
 }
 
 // Testbench
