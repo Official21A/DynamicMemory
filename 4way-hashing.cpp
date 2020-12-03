@@ -4,12 +4,11 @@ using namespace std;
 
 // ----------------- Classes -------------------
 
-
 // Each data element that we store in memory
 class Node 
 {
     public:
-        int key
+        int key;
         long data;
         Node* next;
         Node(int nodekey, long nodedata)
@@ -62,10 +61,10 @@ class Intersection
 
 Intersection* main_node = new Intersection();
 
-// Methods we need to implement
-void insertion(int key)
+// Data Structure Methods
+void insertion(int key, long value)
 {
-    Node* temp = create_node(key);
+    Node* temp = create_node(key,value);
     Node* head = main_node->give_a_way(key % 4);
     if (head == NULL)
     {
@@ -124,4 +123,52 @@ int size()
 {
     return way_lenght(main_node->mode_zero) + way_lenght(main_node->mode_one) + way_lenght(main_node->mode_two) + way_lenght(main_node->mode_three);
 }
-void print();
+
+void take_a_walk(Node* head)
+{
+    while (head != NULL)
+    {
+        cout << head->key << " : " << head->data;
+        if (head->next != NULL)
+        {
+            cout << " | ";
+        }
+    }
+    cout << endl;
+}
+
+void print()
+{
+    cout << "1st Street : ";
+    take_a_walk(main_node->mode_zero);
+    cout << "2nd Street : ";
+    take_a_walk(main_node->mode_one);
+    cout << "3rd Street : ";
+    take_a_walk(main_node->mode_two);
+    cout << "4th Street : ";
+    take_a_walk(main_node->mode_three);
+}
+
+
+// Test case
+int main()
+{
+    // Some insertions
+    insertion(4, 400);
+    insertion(56, 23155);
+    insertion(1, 15);
+    insertion(32, 1200000);
+    insertion(102, 542000);
+    insertion(33, 12774573);
+    insertion(5736, 256165183);
+    // Show
+    print();
+    // size
+    cout << size() << endl;
+    // Delete
+    deletion(56);
+    deletion(102);
+    //
+    print();
+    return 0;
+}
