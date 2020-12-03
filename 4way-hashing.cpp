@@ -91,6 +91,37 @@ Node* search(int key)
     return head;
 }
 
-Node* deletion(int key);
-int size();
+Node* deletion(int key)
+{
+    Node* temp = search(key);
+    Node* head = main_node->give_a_way(key % 4);
+    if (head == temp)
+    {
+        head = temp->next;
+    } else 
+    {
+        while (head->next != NULL && head->next != temp)
+        {
+            head = head->next;
+        }
+        head->next = temp->next;
+    }
+    return temp;
+}
+
+int way_lenght(Node* head)
+{
+    int count = 0;
+    while (head != NULL)
+    {
+        head = head->next;
+        count++;
+    }
+    return count;
+}
+
+int size()
+{
+    return way_lenght(main_node->mode_zero) + way_lenght(main_node->mode_one) + way_lenght(main_node->mode_two) + way_lenght(main_node->mode_three);
+}
 void print();
