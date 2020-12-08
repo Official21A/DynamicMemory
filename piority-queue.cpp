@@ -55,6 +55,38 @@ void add_event(int key, string value)
     index++;
 }
 
+// A recursive method for heapifing the heap
+void heapify(int index)
+{
+    int left = index * 2 + 1;
+    int right = left + 1;
+    if(left >= memory_space || right >= memory_space)
+    {
+        return;
+    }
+    int largest = 0;
+    if (memory[index]->key > memory[left]->key)
+    {
+        largest = index;
+    } else
+    {
+        largest = left;
+    }
+    if (memory[largest]->key > memory[right]->key)
+    {
+        largest = largest;
+    } else
+    {
+        largest = right;
+    }
+    if (largest != index)
+    {
+        Node* temp = memory[index];
+        memory[index] = memory[largest];
+        memory[largest] = temp;
+        heapify(largest);
+    }
+}
 
 
 // Testbench
