@@ -25,7 +25,7 @@ Node* create_node(int key, string value)
 
 // Structure needes
 int memory_space = 100;
-int index = 0;
+int head = 0;
 Node* memory[memory_space];
 
 // Check the new adding
@@ -45,14 +45,14 @@ void check_to_root(int index)
 // Add a new event
 void add_event(int key, string value)
 {
-    if (index == memory_space)
+    if (head == memory_space)
     {
         cout << "Overflow" << endl;
         return;
     }
-    memory[index] = create_node(key, value);
-    check_to_root(index);
-    index++;
+    memory[head] = create_node(key, value);
+    check_to_root(head);
+    head++;
 }
 
 // A recursive method for heapifing the heap
@@ -88,9 +88,31 @@ void heapify(int index)
     }
 }
 
+// A method to get the maximum in piority
+Node* get_max()
+{
+    if (head == 0)
+    {
+        cout << "Underflow" << endl;
+        return;
+    }
+    Node* temp = memory[0];
+    memory[0] = memory[head - 1];
+    delete memory[head - 1];
+    head--;
+    heapify(0);
+    return temp;
+}
+
 
 // Testbench
 int main()
 {
-    
+    add_event(10, "save"); // | save |
+    add_event(5, "open file"); // | save | open file |
+    add_event(12, "ctrl alt delete"); // | ctrl alt delete | open file | save |
+    get_max(); // | save | open file |
+    get_max(); // | open file |
+    add_event(10, "shutdown"); // | shut down | open file |
+    get_max(); // | open file |
 }
